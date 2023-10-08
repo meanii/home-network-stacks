@@ -1,0 +1,10 @@
+[Unit]
+Description=sshm ssh tunnel daemon
+
+[Service]
+Type=simple
+User=meanii
+ExecStart=/etc/sshm.sh
+
+[Install]
+WantedBy=multi-user.target
