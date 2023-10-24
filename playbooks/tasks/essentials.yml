@@ -1,0 +1,34 @@
+- name: Update dependencies
+  apt:
+    name: '*'
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install essential packages
+  package:
+    name: '{{ packages }}'
+    state: latest
+
+- name: Disable SSH password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+    state: present
+    backup: yes
+  register: sshd_config
+  notify: restart sshd
+
+- name: Enable passwordless sudo for {{ username }}
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '^%wheel'
+    line: '{{ username }} ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: Restart SSH service
+  service:
+    name: sshd
+    state: restarted
+  when: sshd_config.changed
