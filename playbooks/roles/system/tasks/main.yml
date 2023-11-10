@@ -1,0 +1,3 @@
+---
+- include_tasks: essentials.yml
+- include_tasks: docker.yml
