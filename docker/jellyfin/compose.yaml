@@ -18,3 +18,8 @@ services:
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     restart: unless-stopped
+
+networks:
+  default:
+    external: true
+    name: npm

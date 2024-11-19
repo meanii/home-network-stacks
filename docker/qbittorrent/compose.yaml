@@ -18,3 +18,7 @@ services:
       - 6881:6881/udp
     restart: unless-stopped
 
+networks:
+  default:
+    external: true
+    name: npm
