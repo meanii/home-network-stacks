@@ -6,7 +6,7 @@ installing sshm is easy, just run the following command:
 
 1. create sshm daemon
 ```bash
-sudo cat << EOF
+sudo cat << EOF > /etc/systemd/system/sshm.service
 [Unit]
 Description=sshm ssh tunnel daemon
 
@@ -17,12 +17,12 @@ ExecStart=/etc/sshm.sh
 
 [Install]
 WantedBy=multi-user.target
-EOF > /etc/systemd/system/sshm.service
+EOF
 ```
 
 2. create sshm script
 ```bash
-sudo cat << EOF
+sudo cat << EOF > /etc/sshm.sh
 #!/bin/bash 
 
 # author: meanii (https://github.com/meanii)
@@ -30,7 +30,7 @@ sudo cat << EOF
 # It is run as root
 
 ssh -nNTv -R 0.0.0.0:2222:localhost:22 root@meanii.dev
-EOF > /etc/sshm.sh
+EOF
 ```
 
 3. grant permissions
